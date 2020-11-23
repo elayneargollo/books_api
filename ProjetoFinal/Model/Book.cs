@@ -11,7 +11,7 @@ namespace Solutis.Model
         public string Isbn { set; get; }
 
         [Column("price")]
-        public float Price { set; get; }
+        public decimal Price { set; get; }
 
         [Column("category")]
         public string Category { set; get; }

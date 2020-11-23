@@ -79,5 +79,49 @@
             
              </remarks>
         </member>
+        <member name="M:Solutis.Controllers.LoginController.Post(Solutis.Model.User)">
+             <summary>
+             Insert/create a specific user. *Requires authentication*
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /user
+                 {
+                    "username": "elayne",
+                    "password": "elayne",
+                    "role": "develop" 
+                 }
+            
+             </remarks>      
+        </member>
+        <member name="M:Solutis.Controllers.LoginController.Put(Solutis.Model.User)">
+             <summary>
+             Change information for a specific user. *Requires authentication*
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 PUT /user
+                 {
+                    "id": "2"    
+                    "username": "elayne",
+                    "password": "elayne",
+                    "role": "develop" 
+                 }
+            
+             </remarks>
+        </member>
+        <member name="M:Solutis.Controllers.LoginController.Delete(System.Int64)">
+             <summary>
+             Deletes a specific user. *Requires authentication level manager*
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 DELETE /book/v1/2
+            
+             </remarks>
+        </member>
     </members>
 </doc>

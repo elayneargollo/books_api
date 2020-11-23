@@ -10,20 +10,20 @@ namespace Solutis.Controllers
 {
     [Produces("application/json")]
     [ApiVersion("1")]
-    [Route("api/[controller]/v{version:apiVersion}")] // api/person/v1
+    [Route("api/[controller]/v{version:apiVersion}")] // api/book/v1
     [ApiController]
     public class BookController : ControllerBase
     {
 
         private readonly ILogger<BookController> _logger;
         private IBookBusiness _bookBusiness;
-        private IBookRepository _repository;
+        private IBookRepository _bookRepository;
 
-        public BookController(ILogger<BookController> logger, IBookBusiness bookBusiness, IBookRepository repository)
+        public BookController(ILogger<BookController> logger, IBookBusiness bookBusiness, IBookRepository bookRepository)
         {
             _logger = logger;
             _bookBusiness = bookBusiness;
-            _repository = repository;
+            _bookRepository = bookRepository;
 
         }
 
@@ -41,7 +41,7 @@ namespace Solutis.Controllers
             if(books == null) return BadRequest();
 
             List<Book> livros = new List<Book>();
-            livros = _repository.getInfoAllBook(books);
+            livros = _bookRepository.getInfoAllBook(books);
             if(livros == null) return BadRequest();
 
              return Ok(livros);
@@ -52,14 +52,13 @@ namespace Solutis.Controllers
         /// Search specific book by id.
         /// </summary>
         [HttpGet("{id}")]
-        [AllowAnonymous]
-        public IActionResult Get([FromRoute] long id)
+        [Authorize]        public IActionResult Get([FromRoute] long id)
         {
             var book = _bookBusiness.FindByID(id);
             if(book == null) return BadRequest();
 
             Book livro = new Book();
-            livro = _repository.getInfoOneBook(book);
+            livro = _bookRepository.getInfoOneBook(book);
             if(livro == null) return BadRequest();
 
              return Ok(livro);
@@ -83,7 +82,7 @@ namespace Solutis.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        [Authorize(Roles = "manager, employee")]
+        [Authorize(Roles = "manager, employee, develop")]
         public IActionResult Post([FromBody] BookVO book)
         {
             if (book == null) return BadRequest();
@@ -109,7 +108,7 @@ namespace Solutis.Controllers
         [ProducesResponseType((200), Type = typeof(BookVO))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        [Authorize(Roles = "manager, employee")]
+        [Authorize(Roles = "manager, employee, develop")]
         public IActionResult Put([FromBody] BookVO book)
         {
 
@@ -140,7 +139,7 @@ namespace Solutis.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        [Authorize(Roles = "manager")]
+        [Authorize(Roles = "manager, develop")]
         public IActionResult Delete(long id)
         {
             _bookBusiness.Delete(id);

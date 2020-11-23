@@ -1,6 +1,9 @@
 using Solutis.Model;
 using System.Linq;
 using Solutis.Repository;
+using System.Collections.Generic;
+using System.Text;
+using Solutis.Services;
 
 namespace Solutis.Business.Implementations
 {
@@ -14,11 +17,41 @@ namespace Solutis.Business.Implementations
         }
 
         public User Validate(string username,string password){
-            var users = (_repository.FindAll());
-            
+           var users = (_repository.FindAll());
+           string passwordGenerate = MD5Service.GenerateMD5(password);
+           
             return users.Where(
-                    x => x.Username.ToLower() == username.ToLower() && 
-                    x.Password == password).FirstOrDefault();
+                    x => 
+                         x.Username.ToLower() == username.ToLower() && 
+                         x.Password == passwordGenerate
+                         ).FirstOrDefault();
+        }
+
+
+        public List<User> FindAll()
+        {
+            return _repository.FindAll();
+        }
+
+        public User FindByID(long id)
+        {
+            return  _repository.FindById(id);
+        }
+
+        public User Create(User user)
+        {
+            user.Password = MD5Service.GenerateMD5(user.Password);
+            return _repository.Create(user);
+        }
+
+        public User Update(User book)
+        {
+            return  _repository.Update(book);
+        }
+
+        public void Delete(long id)
+        {
+            _repository.Delete(id);
         }
     }
 }

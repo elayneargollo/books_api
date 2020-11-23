@@ -107,14 +107,15 @@ namespace Solutis
                 };
             });
 
-            string stringConexao = "Server=localhost;DataBase=dataBase_solutis;Uid=root;Pwd=admin1234";
+           // string stringConexao = "Server=localhost;DataBase=dataBase_solutis;Uid=root;Pwd=admin1234";
+            string conexao = "Server=natalia-db-server.mysql.database.azure.com; Port=3306; Database=dataBase_solutis; Uid=elaynenatalia@natalia-db-server; Pwd=alisonS2$; SslMode=Preferred;";
             services.AddDbContext<Contexto>(options =>
-            options.UseMySQL(stringConexao));
+            options.UseMySQL(conexao));
 
-            if (Environment.IsDevelopment())
-            {
-                MigrateDatabase(stringConexao);
-            }
+        //   if (Environment.IsDevelopment())
+        //   {
+        //         MigrateDatabase(conexao);
+        //    }
 
 
             services.AddApiVersioning();
