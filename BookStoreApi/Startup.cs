@@ -107,8 +107,8 @@ namespace Solutis
                 };
             });
 
-           // string stringConnection = "Server=localhost;DataBase=dataBase_solutis;Uid=root;Pwd=admin1234";
-            string stringConnection = "Server=natalia-db-server.mysql.database.azure.com; Port=3306; Database=dataBase_solutis; Uid=elaynenatalia@natalia-db-server; Pwd=alisonS2$; SslMode=Preferred;";
+            string stringConnection = "Server=localhost;DataBase=dataBase_solutis;Uid=root;Pwd=admin1234";
+
             services.AddDbContext<Contexto>(options =>
             options.UseMySQL(stringConnection));
 
