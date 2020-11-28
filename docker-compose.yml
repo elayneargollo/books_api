@@ -1,0 +1,13 @@
+version: "3.4"
+
+services:
+  bookstoreapi:
+    container_name: bookstoreapi
+    image: bookstoreapi
+    environment:
+      - PORT=5001
+    ports:
+      - 5001:5001
+    build:
+      context: .
+      dockerfile: Dockerfile
