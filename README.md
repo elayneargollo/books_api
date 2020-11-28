@@ -42,6 +42,10 @@ Métodos de exclusão e criação são permitidos apenas para usuários com nív
 
 - [x] dotnet watch run 
 
+### Pontos Fracos
+
+- [x] Uso do md5 para criptografia (facilmente quebravel)
+
 ### Documentação de referencia 
 
 - [x] Doc API: https://docs.microsoft.com/pt-br/aspnet/web-api/overview/older-versions/build-restful-apis-with-aspnet-web-api 
