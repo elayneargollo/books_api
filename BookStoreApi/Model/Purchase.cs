@@ -3,6 +3,7 @@ using Solutis.Model.Base;
 using System.ComponentModel.DataAnnotations;
 using Solutis.Data.VO;
 
+
 namespace Solutis.Model
 {
     [Table("purchase")]

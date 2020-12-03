@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Solutis.Model.Base;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 using System.ComponentModel.DataAnnotations;
 namespace Solutis.Model
 {
@@ -33,7 +32,7 @@ namespace Solutis.Model
         [NotMapped]
         public string Description { set; get; }
 
-         [Column("amount")]
+        [Column("amount")]
         public long Amount { set; get; }
 
     }
