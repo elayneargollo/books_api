@@ -1,4 +1,4 @@
-# Book Store API 
+# Book Store API - Desafio Solutis
 
 ### Funcionamento do Sistema
 
@@ -41,6 +41,10 @@ Métodos de exclusão e criação são permitidos apenas para usuários com nív
 ### Acesso Local 
 
 - [x] dotnet watch run 
+
+### Pontos Fracos
+
+- [x] Uso do md5 para criptografia (facilmente quebravel)
 
 ### Documentação de referencia 
 
