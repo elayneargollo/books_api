@@ -105,7 +105,7 @@ namespace Solutis.Controllers
         public IActionResult Get([FromRoute] long id)
         {
             var user = _userBusiness.FindByID(id);
-            if (user == null) return NotFound("Unable to locate this user");
+            if (user is null) return NotFound("Unable to locate this user");
 
             return Ok(user);
         }
@@ -132,11 +132,16 @@ namespace Solutis.Controllers
         /// <response code="500">Due to server problems, it`s not possible to get your data now</response> 
 
         [HttpPost]
-        [Authorize(Roles = "manager, employee")]
+        // [Authorize(Roles = "manager, employee")]
         public IActionResult Post([FromBody] User user)
         {
-            if (user == null) return BadRequest("Unable to locate this user");
+            UserValidation validator = new UserValidation(user);
+            ValidationResult result = validator.Validate(user);
+
+            if(!result.IsValid) return BadRequest(result.Errors[0].ErrorMessage);
+            
             return Ok(_userBusiness.Create(user));
+
         }
 
         /// <summary>
