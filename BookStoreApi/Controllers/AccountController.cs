@@ -51,15 +51,7 @@ namespace Solutis.Controllers
             if(!result.IsValid) return BadRequest(result.Errors[0].ErrorMessage);
             
             var user = _userBusiness.Validate(model.Username, model.Password);
-
-            return new
-            {
-                user = user.Username,
-                role = user.Role,
-                createToken = (DateTime.Today).ToString(),
-                token = SecurityService.GenerateToken(user)
-            };
-
+            return Ok(new Login(user));
         }
 
         /// <summary>
@@ -109,11 +101,11 @@ namespace Solutis.Controllers
         /// <response code="500">Due to server problems, it`s not possible to get your data now</response>
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "manager, employee")]
+        // [Authorize(Roles = "manager, employee")]
         public IActionResult Get([FromRoute] long id)
         {
             var user = _userBusiness.FindByID(id);
-            if (user == null) return BadRequest("Unable to locate this user");
+            if (user == null) return NotFound("Unable to locate this user");
 
             return Ok(user);
         }
