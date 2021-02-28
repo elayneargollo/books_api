@@ -7,10 +7,11 @@ using Solutis.Business;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using FluentValidation.Results;
 
 namespace Solutis.Controllers
 {
-    [Route("api/[controller]/v{version:apiVersion}")]
+    [Route("/api/account")]
     public class AccountController : ControllerBase
     {
         private readonly ILogger<AccountController> _logger;
@@ -41,22 +42,22 @@ namespace Solutis.Controllers
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-        public async Task<ActionResult<dynamic>> Authenticate([FromBody] User model)
+        public async Task<ActionResult<dynamic>> Authenticate([FromBody] UserRequest model)
         {
+
+            LoginValidation validator = new LoginValidation(model, _userBusiness);
+            ValidationResult result = validator.Validate(model);
+
+            if(!result.IsValid) return BadRequest(result.Errors[0].ErrorMessage);
+            
             var user = _userBusiness.Validate(model.Username, model.Password);
-
-            if (user == null) return NotFound(new { message = "Username or password is invalid" });
-            var token = "";
-            await Task.Run(() => token = SecurityService.GenerateToken(user));
-
-            if (token == null) return Unauthorized("We were unable to generate your token");
 
             return new
             {
                 user = user.Username,
                 role = user.Role,
                 createToken = (DateTime.Today).ToString(),
-                token = token
+                token = SecurityService.GenerateToken(user)
             };
 
         }
