@@ -132,7 +132,7 @@ namespace Solutis.Controllers
         /// <response code="500">Due to server problems, it`s not possible to get your data now</response> 
 
         [HttpPost]
-        // [Authorize(Roles = "manager, employee")]
+        [Authorize(Roles = "manager, employee")]
         public IActionResult Post([FromBody] User user)
         {
             UserValidation validator = new UserValidation(user);
@@ -167,14 +167,16 @@ namespace Solutis.Controllers
         /// <response code="500">Due to server problems, it`s not possible to get your data now</response>
 
         [HttpPut]
-        [Authorize(Roles = "manager")]
+        // [Authorize(Roles = "manager")]
         public IActionResult Put([FromBody] User user)
         {
-            if (user == null) return BadRequest("Unable to locate this user");
 
-            var updatedUser = _userBusiness.Update(user);
-            if (updatedUser == null) return BadRequest("It is not possible to change this user");
-            return new ObjectResult(updatedUser);
+            UserUpdateValidation validator = new UserUpdateValidation(user, _userBusiness);
+            ValidationResult result = validator.Validate(user);
+
+            if(!result.IsValid) return BadRequest(result.Errors[0].ErrorMessage);
+
+            return new ObjectResult( _userBusiness.Update(user));
         }
 
 
