@@ -5,6 +5,7 @@ using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using Solutis.Repositories;
 using Solutis.Data.VO;
+using Newtonsoft.Json;
 
 namespace Solutis.Services
 {
@@ -42,8 +43,29 @@ namespace Solutis.Services
                 newBook.Amount = book.Amount;
                 newBook.Isbn = book.Isbn;
                 newBook.Authors = obj["authors"].ToObject<List<string>>();
+                newBook.Imagem = findPathImagem(obj["imageLinks"].ToString());            
 
             return newBook;
+        }
+
+        public string GetImagBook(BookVO book) 
+        {
+            JToken obj =  this.GetBookByISBNtAsync(book.Isbn)?.Result;
+      
+            var pathImagem = findPathImagem(obj["imageLinks"]?.ToString());            
+
+            return pathImagem;
+        }
+
+        private string findPathImagem(string imagem)
+        {
+            if(imagem == null)
+            {
+                return "";
+            }
+            
+            var paths = JsonConvert.DeserializeObject<Imagem>(imagem);
+            return paths.smallThumbnail;
         }
     
         public List<Book> GetInfoAllBook(List<BookVO> books) 

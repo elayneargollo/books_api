@@ -19,6 +19,7 @@ namespace Solutis.Data.Converter.Implementations
                 Price = origin.Price,
                 Title = origin.Title,
                 Amount = origin.Amount,
+                Imagem = origin.Imagem
 
             };
         }
@@ -35,7 +36,7 @@ namespace Solutis.Data.Converter.Implementations
                 Price = origin.Price,
                 Title = origin.Title,
                 Amount = origin.Amount,
-
+                Imagem = origin.Imagem
             };
         }
 

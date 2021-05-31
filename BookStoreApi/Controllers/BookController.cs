@@ -44,13 +44,19 @@ namespace Solutis.Controllers
         /// <response code="500">Due to server problems, it`s not possible to get your data now</response>
 
         [HttpGet]
-        [AllowAnonymous]
+     //   [AllowAnonymous]
         public IActionResult Get()
         {
 
             List<BookVO> books = new List<BookVO>();
             books = _bookBusiness.FindAll();
+
             if (books == null) return BadRequest();
+
+            foreach(var item in books)
+            {
+                item.Imagem = _bookRepository.GetImagBook(item);
+            }
 
             return Ok(books);
 
@@ -181,7 +187,7 @@ namespace Solutis.Controllers
         /// <response code="500">Due to server problems, it`s not possible to get your data now</response>
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "stockist, manager")]
+    //    [Authorize(Roles = "stockist, manager")]
         public IActionResult Delete(long id)
         {
             _bookBusiness.Delete(id);

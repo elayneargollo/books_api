@@ -72,7 +72,7 @@ namespace Solutis.Controllers
         /// <response code="500">Due to server problems, it`s not possible to get your data now</response>
 
         [HttpGet]
-        [Authorize(Roles = "manager, employee")]
+       // [Authorize(Roles = "manager, employee")]
         public IActionResult Get()
         {
 
@@ -132,7 +132,7 @@ namespace Solutis.Controllers
         /// <response code="500">Due to server problems, it`s not possible to get your data now</response> 
 
         [HttpPost]
-        [Authorize(Roles = "manager, employee")]
+     //   [Authorize(Roles = "manager, employee")]
         public IActionResult Post([FromBody] User user)
         {
             UserValidation validator = new UserValidation(user);
@@ -198,7 +198,7 @@ namespace Solutis.Controllers
         /// <response code="500">Due to server problems, it`s not possible to get your data now</response>
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "manager")]
+     //   [Authorize(Roles = "manager")]
         public IActionResult Delete(long id)
         {
             _userBusiness.Delete(id);

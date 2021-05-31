@@ -31,6 +31,9 @@ namespace Solutis.Model
 
         [NotMapped]
         public string Description { set; get; }
+        [NotMapped]
+        public string Imagem { set; get; }
+
 
         [Column("amount")]
         public long Amount { set; get; }

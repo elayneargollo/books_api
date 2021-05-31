@@ -11,6 +11,7 @@ namespace Solutis.Repositories
     {
         Task<JToken> GetBookByISBNtAsync(string isbn);
         Book GetInfoOneBook(BookVO book);
+        string GetImagBook(BookVO book);
         List<Book> GetInfoAllBook(List<BookVO> books);
 
     }
