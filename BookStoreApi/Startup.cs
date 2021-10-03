@@ -137,7 +137,7 @@ namespace Solutis
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API REST with ASP NET CORE 3.0");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API REST with ASP NET CORE 3.1.4");
                 c.RoutePrefix = "swagger";
             });
 
