@@ -42,7 +42,6 @@ namespace Solutis.Services
                     sb.Append(hashBytes[i].ToString("X2"));
                 }
                 return sb.ToString();
-
             }
         }
 

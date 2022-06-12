@@ -107,7 +107,7 @@ namespace Solutis
                 };
             });
 
-            string stringConnection = "Server=localhost;DataBase=dataBase_solutis;Uid=root;Pwd=admin1234";
+            string stringConnection = Configuration["MySQLConnection:MySQLConnection"];
 
             services.AddDbContext<Contexto>(options =>
             options.UseMySQL(stringConnection));
