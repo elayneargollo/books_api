@@ -19,6 +19,8 @@ using System.IO;
 using Microsoft.OpenApi.Models;
 using Solutis.Services;
 using Solutis.Repositories;
+using Prometheus;
+using Prometheus.DotNetRuntime;
 
 namespace Solutis
 {
@@ -26,6 +28,7 @@ namespace Solutis
     {
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment Environment { get; }
+        public static IDisposable Collector;
 
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
@@ -134,6 +137,8 @@ namespace Solutis
 
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseHttpMetrics();
+            app.UseMetricServer();
 
             app.UseSwaggerUI(c =>
             {
@@ -157,6 +162,7 @@ namespace Solutis
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapMetrics();
             });
         }
 
@@ -177,6 +183,23 @@ namespace Solutis
                 Log.Error("Database migration failed", ex);
                 throw;
             }
+        }
+
+        public static IDisposable CreateCollector()
+        {
+            var builder = DotNetRuntimeStatsBuilder.Default();
+
+            builder = DotNetRuntimeStatsBuilder
+                        .Customize()
+                        .WithContentionStats(CaptureLevel.Informational)
+                        .WithGcStats(CaptureLevel.Informational)
+                        .WithExceptionStats(CaptureLevel.Errors)
+                        .WithThreadPoolStats(CaptureLevel.Informational)
+                        .WithJitStats();
+
+            //builder.RecycleCollectorsEvery(new TimeSpan(0, 20,0));
+            return builder
+                .StartCollecting();
         }
     }
 }
