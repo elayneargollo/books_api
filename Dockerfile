@@ -16,7 +16,9 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-RUN useradd -m myappuser
-USER myappuser
+ENTRYPOINT ["dotnet", "Solutis.dll"]
 
-CMD ASPNETCORE_URLS="http://*:$PORT" dotnet Solutis.dll
+#RUN useradd -m myappuser
+#USER myappuser
+
+##CMD ASPNETCORE_URLS="http://*:$PORT" dotnet Solutis.dll

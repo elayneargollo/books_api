@@ -1,13 +1,50 @@
 version: "3.4"
 
 services:
-  bookstoreapi:
-    container_name: bookstoreapi
+
+  aplication:
+    build: .
     image: bookstoreapi
-    environment:
-      - PORT=5001
+    container_name: aplication
+    restart: unless-stopped
     ports:
-      - 5001:5001
-    build:
-      context: .
-      dockerfile: Dockerfile
+      - "8090:80"
+    init: true
+    privileged: true
+    networks:
+      - website
+    #environment:
+      #- PORT=5001
+    #ports:
+      #- 5001:5001
+    #build:
+      #context: .
+      #dockerfile: Dockerfile
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    volumes:
+      - ./grafana:/var/lib/grafana
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    networks:
+      - website
+    depends_on:
+      - prometheus
+
+  prometheus:
+    image: prom/prometheus:latest
+    restart: unless-stopped
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - website
+
+networks:
+  website:
+    driver: bridge
