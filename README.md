@@ -32,6 +32,8 @@ Métodos de exclusão e criação são permitidos apenas para usuários com nív
 - [x] Visual Code
 - [x] Azure para hospedagem do banco de dados
 - [x] Docker para gerar imagem do projeto 
+- [x] Grafana
+- [x] Prometheus
 
 ### Deploy
 
