@@ -1,5 +1,6 @@
 ## PASSO A PASSO PARA UTILIZAR O DOCKER COMPOSE
 
+
 1. Após intatalações e configurações verifique se o ambiente está pronto:
 
    - Fora da pasta BookStoreApi, onde se encontra o dockerfile, digite o seguinte comando:
