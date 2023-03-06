@@ -14,13 +14,17 @@
 
    - REPOSITORY <nome_imagem>: tag: image id
    
-3. Suba o docker compose ao digitar:
+3. Altere no docker compose o service 'aplication':
+
+         image: <nome_imagem> 
+   
+4. Suba o docker compose ao digitar:
 
    - Insira o comando no terminal.
 
          docker compose up -d
 
-4. Os seguintes links estarão disponíveis:
+5. Os seguintes links estarão disponíveis:
 
         - Grafana: localhost:3000
         - Prometheus: localhost:9090
