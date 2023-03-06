@@ -32,5 +32,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.5.0" />
     <PackageReference Include="prometheus-net.AspNetCore" Version="5.0.1" />
     <PackageReference Include="prometheus-net.DotNetRuntime" Version="4.4.0" />
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="3.1.1" />
   </ItemGroup>
 </Project>

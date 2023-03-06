@@ -44,10 +44,8 @@ namespace Solutis.Controllers
         /// <response code="500">Due to server problems, it`s not possible to get your data now</response>
 
         [HttpGet]
-     //   [AllowAnonymous]
         public IActionResult Get()
         {
-
             List<BookVO> books = new List<BookVO>();
             books = _bookBusiness.FindAll();
 
@@ -81,7 +79,6 @@ namespace Solutis.Controllers
         /// <response code="500">Due to server problems, it`s not possible to get your data now</response>
 
         [HttpGet("{id}")]
-        [AllowAnonymous]
         public IActionResult Get([FromRoute] long id)
         {
             var book = _bookBusiness.FindByID(id);
@@ -187,7 +184,7 @@ namespace Solutis.Controllers
         /// <response code="500">Due to server problems, it`s not possible to get your data now</response>
 
         [HttpDelete("{id}")]
-    //    [Authorize(Roles = "stockist, manager")]
+        [Authorize(Roles = "stockist, manager")]
         public IActionResult Delete(long id)
         {
             _bookBusiness.Delete(id);

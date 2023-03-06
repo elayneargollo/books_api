@@ -4,9 +4,9 @@ using WebMySQL.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+
 namespace Solutis.Repository
 {
-
     public class GenericRepository<T> : IRepository<T> where T : BaseEntity
     {
         private Contexto _context;

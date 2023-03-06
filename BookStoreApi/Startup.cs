@@ -21,6 +21,13 @@ using Solutis.Services;
 using Solutis.Repositories;
 using Prometheus;
 using Prometheus.DotNetRuntime;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System.Linq;
 
 namespace Solutis
 {
@@ -111,14 +118,22 @@ namespace Solutis
             });
 
             string stringConnection = Configuration["MySQLConnection:MySQLConnection"];
+            services.AddDbContext<Contexto>(options => options.UseMySQL(stringConnection));
 
-            services.AddDbContext<Contexto>(options =>
-            options.UseMySQL(stringConnection));
+            services
+                .AddHealthChecks()
+                .AddSqlServer(
+                    connectionString: Configuration["MySQLConnection:MySQLConnection"],
+                    healthQuery: "SELECT 1;",
+                    name: "SQL Server",
+                    failureStatus: HealthStatus.Degraded,
+                    tags: new string[] { "db", "sql", "sqlserver" })
+                .AddDbContextCheck<Contexto>();
 
             if (Environment.IsDevelopment())
             {
                 MigrateDatabase(stringConnection);
-            }
+            };
 
             services.AddScoped<IBookBusiness, BookBusinessImplementation>();
             services.AddScoped<IUserBusiness, UserBusinessImplementation>();
@@ -133,6 +148,10 @@ namespace Solutis
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
             }
 
             app.UseHttpsRedirection();
@@ -163,6 +182,12 @@ namespace Solutis
             {
                 endpoints.MapControllers();
                 endpoints.MapMetrics();
+            });
+
+            app.UseHealthChecks("/healthCheck", new HealthCheckOptions()
+            {
+                Predicate = _ => true,
+                ResponseWriter = WriteResponse,
             });
         }
 
@@ -197,9 +222,21 @@ namespace Solutis
                         .WithThreadPoolStats(CaptureLevel.Informational)
                         .WithJitStats();
 
-            //builder.RecycleCollectorsEvery(new TimeSpan(0, 20,0));
             return builder
                 .StartCollecting();
+        }
+
+        private static Task WriteResponse(HttpContext httpContext, HealthReport result)
+        {
+            httpContext.Response.ContentType = "application/json"; var json = new JObject(
+                    new JProperty("status", result.Status.ToString()),
+                    new JProperty("results", new JObject(result.Entries.Select(pair =>
+                    new JProperty(pair.Key, new JObject(
+                    new JProperty("status", pair.Value.Status.ToString()),
+                    new JProperty("duration", pair.Value.Duration),
+                    new JProperty("data", new JObject(pair.Value.Data.Select(p => new JProperty(p.Key, p.Value))))))))));
+                    
+            return httpContext.Response.WriteAsync(json.ToString(Formatting.Indented));
         }
     }
 }
