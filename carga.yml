@@ -1,0 +1,38 @@
+config:
+  target: "http://localhost:8090/api/"
+  phases:
+    - duration: 120
+      arrivalCount: 150
+
+  before:
+    flow:
+      - log: "Obter token"
+      - post:
+          url: "http://localhost:8090/api/account/login"
+          json:
+            username: "elayne"
+            password: "develop123"
+          capture:
+            - json: $.id_token
+              as: token
+
+scenarios:
+  - flow:
+      - log: "Listar todos os livros"
+      - get:
+          url: "http://localhost:8090/api/Book/v1"
+          headers:
+            authorization: "Bearer {{ token }}"
+      - log: "Listar todas as compras"
+      - get:
+          url: "http://localhost:8090/api/Purchase/v1"
+          headers:
+            authorization: "Bearer {{ token }}"
+      - log: "Criar usuário"
+      - post:
+          url: "http://localhost:8090/api/account"
+          json:
+            username: "artillery"
+            password: "artillery"
+            role: "artillery"
+            id: 0
