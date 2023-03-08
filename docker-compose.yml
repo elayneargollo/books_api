@@ -4,7 +4,8 @@ services:
 
   aplication:
     build: .
-    image: bookstoreapi
+    #image: bookstoreapi
+    image: bookstoreapi:v1
     container_name: aplication
     restart: unless-stopped
     ports:
@@ -45,6 +46,29 @@ services:
     networks:
       - website
 
+  loki:
+    image: grafana/loki:2.0.0
+    container_name: loki
+    command: "-config.file=/etc/loki/config.yaml -target=read"
+    restart: unless-stopped
+    volumes:
+      - ./loki-config.yaml:/etc/loki/config.yaml
+    entrypoint:
+      - /usr/bin/loki
+      - -config.file=/etc/config/loki.yaml
+    ports:
+      - "3100:3100"
+    depends_on:
+      - promtail
+
+  promtail:
+    image: grafana/promtail:2.7.1
+    volumes:
+      - ./promtail-local-config.yaml:/etc/promtail/config.yaml:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: -config.file=/etc/promtail/config.yaml
+    restart: unless-stopped
+   
 networks:
   website:
     driver: bridge
