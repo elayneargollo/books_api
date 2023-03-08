@@ -34,6 +34,8 @@ Métodos de exclusão e criação são permitidos apenas para usuários com nív
 - [x] Docker para gerar imagem do projeto 
 - [x] Grafana
 - [x] Prometheus
+- [x] Artillery
+- [x] Loki
 
 ### Deploy
 
@@ -48,10 +50,24 @@ Métodos de exclusão e criação são permitidos apenas para usuários com nív
 
 - [x] Uso do md5 para criptografia (facilmente quebravel)
 
+### Links
+
+- [x] Grafana: localhost:3000
+- [x] Prometheus: localhost:9090
+- [x] Aplicação: localhost:8090/swagger/index.html
+
+### Instrução Teste Carga
+- Insira o comando no terminal.
+
+         artillery run carga.yml
+
 ### Documentação de referencia 
 
 - [x] Doc API: https://docs.microsoft.com/pt-br/aspnet/web-api/overview/older-versions/build-restful-apis-with-aspnet-web-api 
 - [x] GitHub: https://github.com/dotnet
 - [x] Autentificação: https://imasters.com.br/dotnet/asp-net-core-2-0-autenticacao-em-apis-utilizando-jwt-json-web-tokens
 - [x] Docker: https://renatogroffe.medium.com/asp-net-core-docker-compose-implementando-solu%C3%A7%C3%B5es-web-multi-containers-5f46d22a2ca0
-
+- [x] Artillery: https://www.artillery.io/docs/guides/guides/test-script-reference
+- [x] Loki: https://grafana.com/oss/loki/
+- [x] Grafana: https://grafana.com/docs/
+- [x] Prometheus: https://prometheus.io/
