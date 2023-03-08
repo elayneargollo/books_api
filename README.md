@@ -32,10 +32,11 @@ Métodos de exclusão e criação são permitidos apenas para usuários com nív
 - [x] Visual Code
 - [x] Azure para hospedagem do banco de dados
 - [x] Docker para gerar imagem do projeto 
-- [x] Grafana
-- [x] Prometheus
-- [x] Artillery
-- [x] Loki
+- [x] Grafana para criação de dash de monitoramento
+- [x] Prometheus para coletar métricas da aplicação
+- [x] Artillery para gerar teste de carga
+- [x] Loki para coletar os logs da aplicação
+- [x] Npm para suporte do Artillery
 
 ### Deploy
 
