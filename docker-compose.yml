@@ -49,7 +49,7 @@ services:
   loki:
     image: grafana/loki:2.0.0
     container_name: loki
-    command: "-config.file=/etc/loki/config.yaml -target=read"
+    command: -config.file=/etc/loki/local-config.yaml
     restart: unless-stopped
     volumes:
       - ./loki-config.yaml:/etc/loki/config.yaml
@@ -60,6 +60,8 @@ services:
       - "3100:3100"
     depends_on:
       - promtail
+    networks:
+      - website
 
   promtail:
     image: grafana/promtail:2.7.1
@@ -68,6 +70,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     command: -config.file=/etc/promtail/config.yaml
     restart: unless-stopped
+    networks:
+      - website
    
 networks:
   website:
