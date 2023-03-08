@@ -72,3 +72,17 @@ Métodos de exclusão e criação são permitidos apenas para usuários com nív
 - [x] Loki: https://grafana.com/oss/loki/
 - [x] Grafana: https://grafana.com/docs/
 - [x] Prometheus: https://prometheus.io/
+
+### Imagens referenciais
+
+### Aplicação
+![Alt text](https://github.com/elayneargollo/books-api/blob/main/image/aplicacao.png "Aplicação")
+
+### Artillery
+![Alt text](https://github.com/elayneargollo/books-api/blob/main/image/artillery.png "Teste de Carga")
+
+### Grafana
+![Alt text](https://github.com/elayneargollo/books-api/blob/main/image/grafana.png "Dash Grafana")
+
+### Prometheus
+![Alt text](https://github.com/elayneargollo/books-api/blob/main/image/prometheus.png "Prometheus target")
